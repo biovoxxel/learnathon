@@ -9,6 +9,7 @@ import net.imglib2.img.Img;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.util.Intervals;
 
+import org.scijava.ItemIO;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -45,10 +46,14 @@ public class FirstIJ2Command {
 
 	    @Parameter
 	    private OpService opService;
+	    
+	    @Parameter(type=ItemIO.OUTPUT)
+	    double mean;
 
 	    @Override
 	    public void run() {
-	        final Img<T> image = (Img<T>)currentData.getImgPlus();
+	        @SuppressWarnings("unchecked")
+			final Img<T> image = (Img<T>)currentData.getImgPlus();
 
 	        Cursor<T> imgCursor = image.cursor();
 	        
@@ -60,9 +65,9 @@ public class FirstIJ2Command {
 	        
 	        
 	        
-	        double mean = sum / Intervals.numElements(image);
+	        mean = sum / Intervals.numElements(image);
 	        
-	        ui.showDialog("Image mean = " + mean);
+	        //ui.showDialog("Image mean = " + mean);
 	        
 	    }
 
